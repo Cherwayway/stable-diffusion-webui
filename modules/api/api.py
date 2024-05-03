@@ -570,7 +570,7 @@ class Api:
             raise RuntimeError(f"model {checkpoint_name!r} not found")
         
         if checkpoint_name != shared.sd_model.checkpoint_name:
-                    unload_model_weights()
+            unload_model_weights()
         for k, v in req.items():
             shared.opts.set(k, v, is_api=True)
 
