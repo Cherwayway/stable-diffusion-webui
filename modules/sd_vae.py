@@ -166,6 +166,7 @@ def resolve_vae_near_checkpoint(checkpoint_file) -> VaeResolution:
 
 
 def resolve_vae(checkpoint_file) -> VaeResolution:
+    print("Disable Default VAE: ", shared.opts.disable_default_vae)
     if shared.opts.disable_default_vae:
         print('Default VAE is disabled.')
         return VaeResolution()
