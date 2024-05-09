@@ -748,7 +748,8 @@ def process_images(p: StableDiffusionProcessing) -> Processed:
 def process_images_inner(p: StableDiffusionProcessing) -> Processed:
     """this is the main loop that both txt2img and img2img use; it calls func_init once inside all the scopes and func_sample once per batch"""
 
-    print("using vae:", shared.opts.sd_vae)
+    print("using vae:", sd_vae.base_vae, sd_vae.loaded_vae_file)
+    print("vae checkpoint info", sd_vae.checkpoint_info)
 
     if isinstance(p.prompt, list):
         assert(len(p.prompt) > 0)
