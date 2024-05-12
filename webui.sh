@@ -23,7 +23,7 @@ then
 fi
 
 # If $venv_dir is "-", then disable venv support
-use_venv=1
+use_venv=0
 if [[ $venv_dir == "-" ]]; then
   use_venv=0
 fi
