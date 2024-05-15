@@ -73,6 +73,7 @@ def get_device_for(task):
 
     return get_optimal_device()
 
+import oneflow
 
 def torch_gc():
 
@@ -80,6 +81,7 @@ def torch_gc():
         with torch.cuda.device(get_cuda_device_string()):
             torch.cuda.empty_cache()
             torch.cuda.ipc_collect()
+            oneflow.cuda.empty_cache()
 
     if has_mps():
         mac_specific.torch_mps_gc()
