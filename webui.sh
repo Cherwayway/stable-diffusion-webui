@@ -277,6 +277,13 @@ prepare_tcmalloc() {
 KEEP_GOING=1
 export SD_WEBUI_RESTART=tmp/restart
 while [[ "$KEEP_GOING" -eq "1" ]]; do
+    # 释放GPU资源并添加延迟
+    if command -v nvidia-smi &> /dev/null; then
+        echo "Releasing GPU resources before launching..."
+        python3 -c "import torch; torch.cuda.empty_cache()"
+        sleep 5
+    fi
+
     if [[ ! -z "${ACCELERATE}" ]] && [ ${ACCELERATE}="True" ] && [ -x "$(command -v accelerate)" ]; then
         printf "\n%s\n" "${delimiter}"
         printf "Accelerating launch.py..."
@@ -293,5 +300,12 @@ while [[ "$KEEP_GOING" -eq "1" ]]; do
 
     if [[ ! -f tmp/restart ]]; then
         KEEP_GOING=0
+    else
+        # 释放GPU资源并添加延迟
+        if command -v nvidia-smi &> /dev/null; then
+            echo "Releasing GPU resources after restart signal..."
+            python3 -c "import torch; torch.cuda.empty_cache()"
+            sleep 5
+        fi
     fi
 done
